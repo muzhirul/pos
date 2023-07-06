@@ -22,5 +22,18 @@ class CategoryAdmin(admin.ModelAdmin):
     search_fields = ['name','slug','created_by']
     list_filter = ['name']
 
+
+class ProductAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ("Basic Info",{"fields":[('name','slug','status'),('category'),('type')]}),
+        ("Description",{"fields":[("description")]}),
+    ]
+    list_display = ['name','slug','created_by','created_at','status']
+    prepopulated_fields = {'slug':('name',)}
+    search_fields = ['name','slug','created_by']
+    list_filter = ['name']
+
 admin.site.register(Brand,BrandAdmin)
 admin.site.register(Category,CategoryAdmin)
+admin.site.register(Product,ProductAdmin)
+admin.site.register(Item)
