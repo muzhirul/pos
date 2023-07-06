@@ -6,6 +6,7 @@ class Brand(models.Model):
     name = models.CharField(max_length=255, verbose_name="Brand Name")
     slug = models.SlugField(max_length=255,verbose_name="Brand Slug")
     description = models.TextField(null=True)
+    status = models.BooleanField(default=True)
     created_by = UserForeignKey(auto_user_add=True, on_delete=models.SET_NULL,related_name='brand_creator', editable=False, blank=True, null=True)
     last_modified_by = UserForeignKey(auto_user=True, on_delete=models.SET_NULL, related_name='brand_updated_by', editable=False, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
