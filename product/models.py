@@ -64,6 +64,7 @@ class Item(models.Model):
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, related_name='supplier_item')
     name = models.CharField(max_length=255,verbose_name='Item Name')
     slug = models.SlugField(max_length=255, verbose_name="Item Slug")
+    image = models.ImageField(null=True,blank=True,upload_to='items/',verbose_name='Item Image')
     size = models.CharField(max_length=255,null=True,blank=True)
     sku = models.CharField(max_length=100,null=True,blank=True,db_index=True,verbose_name='Product SKU')
     mrp = models.IntegerField(blank=True,null=True)

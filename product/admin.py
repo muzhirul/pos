@@ -34,7 +34,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['name']
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ['brand','supplier','product','name','size','price','status']
+    list_display = ['brand','supplier','product','name','size','quantity','price','status']
     prepopulated_fields = {'slug':('name',)}
     list_filter = ['brand__name','supplier__name','status']
     search_fields = ['name','brand','supplier']
