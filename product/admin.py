@@ -33,7 +33,13 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ['name','slug','created_by']
     list_filter = ['name']
 
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ['brand','supplier','product','name','size','price','status']
+    prepopulated_fields = {'slug':('name',)}
+    list_filter = ['brand__name','supplier__name','status']
+    search_fields = ['name','brand','supplier']
+
 admin.site.register(Brand,BrandAdmin)
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(Product,ProductAdmin)
-admin.site.register(Item)
+admin.site.register(Item,ItemAdmin)

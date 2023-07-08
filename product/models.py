@@ -1,5 +1,6 @@
 from django.db import models
 from django_userforeignkey.models.fields import UserForeignKey
+from supplier.models import *
 
 # Create your models here.
 class Brand(models.Model):
@@ -60,7 +61,9 @@ class Product(models.Model):
 class Item(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_item')
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name='item_brand')
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, related_name='supplier_item')
     name = models.CharField(max_length=255,verbose_name='Item Name')
+    slug = models.SlugField(max_length=255, verbose_name="Item Slug")
     size = models.CharField(max_length=255,null=True,blank=True)
     sku = models.CharField(max_length=100,null=True,blank=True,db_index=True,verbose_name='Product SKU')
     mrp = models.IntegerField(blank=True,null=True)
