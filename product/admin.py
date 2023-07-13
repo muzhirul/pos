@@ -1,7 +1,13 @@
 from django.contrib import admin
 from product.models import *
+# from admin_searchable_dropdown.filters import AutocompleteFilter
 
 # Register your models here.
+
+
+# class BrandFilter(AutocompleteFilter):
+#     title = 'Brand'
+#     field_name = 'brand'
 class BrandAdmin(admin.ModelAdmin):
     fieldsets = [
         ("Basic Info",{"fields":[('name','slug','status')]}),
@@ -33,11 +39,16 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ['name','slug','created_by']
     list_filter = ['name']
 
+
+
 class ItemAdmin(admin.ModelAdmin):
     list_display = ['brand','supplier','product','name','size','quantity','price','status']
     prepopulated_fields = {'slug':('name',)}
+    # list_filter = [BrandFilter]
     list_filter = ['brand__name','supplier__name','status']
     search_fields = ['name','brand','supplier']
+
+
 
 admin.site.register(Brand,BrandAdmin)
 admin.site.register(Category,CategoryAdmin)

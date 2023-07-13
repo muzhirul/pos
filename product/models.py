@@ -22,7 +22,7 @@ class Brand(models.Model):
     
 
 class Category(models.Model):
-    parent = models.ForeignKey('self', on_delete=models.CASCADE,blank=True,null=True, related_name='sub_category')
+    parent = models.ForeignKey('self', on_delete=models.CASCADE,blank=True,null=True, related_name='category')
     name = models.CharField(max_length=255, verbose_name="Category Name",db_index=True)
     slug = models.SlugField(max_length=255,verbose_name="Category Slug")
     description = models.TextField(null=True,blank=True)
@@ -40,7 +40,7 @@ class Category(models.Model):
         return self.name
     
 class Product(models.Model):
-    category = models.ManyToManyField(Category)
+    category = models.ManyToManyField(Category, related_name='product_category')
     name = models.CharField(max_length=255, verbose_name="Product Name")
     slug = models.SlugField(max_length=255, verbose_name="Product Slug")
     description = models.TextField(verbose_name='Product Description')
@@ -57,11 +57,13 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
     
 class Item(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_item')
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name='item_brand')
-    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, related_name='supplier_item')
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE,null=True,blank=True, related_name='supplier_item')
     name = models.CharField(max_length=255,verbose_name='Item Name')
     slug = models.SlugField(max_length=255, verbose_name="Item Slug")
     image = models.ImageField(null=True,blank=True,upload_to='items/',verbose_name='Item Image')
@@ -79,7 +81,12 @@ class Item(models.Model):
 
     class Meta:
         db_table = 'item'
+        ordering = ['-created_by']
         verbose_name = '4. Item'
 
     def __str__(self):
         return self.product.name
+    
+    def delete(self):
+        self.image.delete()
+        super().delete()
