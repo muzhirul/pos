@@ -3,13 +3,13 @@ from rest_framework.response import Response
 from rest_framework import generics, status
 from product.models import *
 from product.serializers import *
-# from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
 # Create your views here.
 class BrandList(generics.ListCreateAPIView):
     queryset = Brand.objects.all()
     serializer_class = BrandSerializer
-    # permission_classes = [IsAdminUser]
+    permission_classes = [IsAuthenticated]
 
     def list(self, request):
         queryset = self.get_queryset()

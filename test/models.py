@@ -24,5 +24,5 @@ class DetailsReservation(models.Model):
         db_table = 'detail_reservation'
 
     def __str__(self):
-        return str(self.id)
+        return str(self.reservation.name)
     
